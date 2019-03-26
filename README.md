@@ -1,3 +1,5 @@
+Do not merge. Testing something.
+
 # truffleHog
 Searches through git repositories for secrets, digging deep into commit history and branches. This is effective at finding secrets accidentally committed.
 
