@@ -42,13 +42,13 @@ deploy:
       enabled: true
     targets:
       - facet: releaseproduction
-slack: '#security'
+slack: '#appsechelp'
 notification_overrides:
   deploy:
     slack: '#security-deploys'
   pr_merge:
     slack: '#security-deploys'
-team_email: security-engineering@lyft.com
+team_email: application-security@lyft.com
 containers:
   - name: releasestaging
     command: make release_staging
