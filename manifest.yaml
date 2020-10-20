@@ -27,15 +27,21 @@ python:
 deploy:
   - name: staging
     environment: staging
-    legacy: true
-    role: lyftpypi-staging-iad-deploy
+    legacy: false
     orca: []
+    kubernetes:
+      enabled: true
+    targets:
+      - facet: releasestaging
   - name: production
     environment: production
-    legacy: true
-    role: lyftpypi-production-iad-deploy
+    legacy: false
     automatic: true
     orca: []
+    kubernetes:
+      enabled: true
+    targets:
+      - facet: releaseproduction
 slack: '#security'
 notification_overrides:
   deploy:
@@ -43,3 +49,22 @@ notification_overrides:
   pr_merge:
     slack: '#security-deploys'
 team_email: security-engineering@lyft.com
+containers:
+  - name: releasestaging
+    command: make release_staging
+  - name: releaseproduction
+    command: make release_production
+facets:
+  - name: releasestaging
+    type: job
+    member: trufflehog.releasestaging
+    iam:
+      roles:
+        staging: lyftpypi-staging-iad-deploy
+  - name: releaseproduction
+    type: job
+    member: trufflehog.releaseproduction
+    iam:
+      roles:
+        production: lyftpypi-production-iad-deploy
+credentials: true
